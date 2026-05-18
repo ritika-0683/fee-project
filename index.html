@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CookMaster Pro — Culinary Excellence</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── DARK MODE TOGGLE ── -->
+<button id="darkToggle" onclick="toggleDark()">
+  <span id="dkIcon">🌙</span><span id="dkLabel">Dark Mode</span>
+</button>
+
+<!-- ── TOAST NOTIFICATION ── -->
+<div id="toast"></div>
+
+<!-- ── SEARCH OVERLAY ── -->
+<div class="search-ov" id="searchOv" onclick="closeSearchClick(event)">
+  <div class="search-box">
+    <div class="search-hdr">
+      <span id="searchCount">Results</span>
+      <button onclick="closeSearch()" style="font-size:1.1rem;color:var(--ink-lt);">✕</button>
+    </div>
+    <div id="searchList"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════ -->
+<div id="loginScreen" class="screen active">
+
+  <!-- Left decorative panel -->
+  <div class="login-left">
+    <div class="login-deco login-deco-1"></div>
+    <div class="login-deco login-deco-2"></div>
+    <div class="login-deco login-deco-3"></div>
+    <span class="login-food-float" style="position:absolute;top:12%;left:8%;animation-delay:0s;">🍛</span>
+    <span class="login-food-float" style="position:absolute;top:20%;right:12%;animation-delay:1.5s;">🍜</span>
+    <span class="login-food-float" style="position:absolute;bottom:20%;left:10%;animation-delay:3s;">🥘</span>
+    <span class="login-food-float" style="position:absolute;bottom:15%;right:8%;animation-delay:0.8s;">🍱</span>
+    <span class="login-food-float" style="position:absolute;top:50%;left:5%;animation-delay:2s;font-size:1.5rem;">🫕</span>
+    <div style="position:relative;z-index:2;text-align:center;">
+      <div class="login-brand-tag">Culinary Excellence Since 2024</div>
+      <div class="login-brand-logo">CookMaster</div>
+      <div class="login-brand-divider"></div>
+      <div class="login-brand-sub">Discover the art of cooking through<br>authentic recipes from every corner<br>of the beautiful world</div>
+      <div class="login-brand-stats">
+        <div class="login-stat"><div class="login-stat-n">150+</div><div class="login-stat-l">Recipes</div></div>
+        <div class="login-stat"><div class="login-stat-n">12</div><div class="login-stat-l">Cuisines</div></div>
+        <div class="login-stat"><div class="login-stat-n">4.9★</div><div class="login-stat-l">Rated</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right login form panel -->
+  <div class="login-right">
+    <div style="width:100%;max-width:340px;position:relative;z-index:2;">
+      <div style="text-align:center;margin-bottom:28px;">
+        <div style="font-size:2.2rem;margin-bottom:8px;">👨‍🍳</div>
+        <div class="login-form-title" id="loginFormTitle">Welcome Back</div>
+        <div class="login-form-sub" id="loginFormSub">Sign in to your kitchen account</div>
+      </div>
+
+      <!-- Sign In / Sign Up Tabs -->
+      <div class="login-tabs-row">
+        <div class="login-tab-btn act" id="siBtn" onclick="switchLTab('si')">Sign In</div>
+        <div class="login-tab-btn" id="suBtn" onclick="switchLTab('su')">Sign Up</div>
+      </div>
+
+      <!-- Sign In Form -->
+      <div id="siForm">
+        <div class="login-field">
+          <label>Email Address</label>
+          <div class="login-field-ico">📧</div>
+          <input type="email" id="liEmail" placeholder="chef@cookmaster.com" value="chef@cookmaster.com">
+        </div>
+        <div class="login-field">
+          <label>Password</label>
+          <div class="login-field-ico">🔒</div>
+          <input type="password" id="liPass" placeholder="Enter password" value="cook1234">
+        </div>
+        <div style="text-align:right;margin-bottom:14px;">
+          <button style="font-size:.75rem;color:var(--ink-lt);font-weight:500;">Forgot password?</button>
+        </div>
+        <div class="login-err" id="liErr">⚠ Invalid credentials. Use demo: chef@cookmaster.com / cook1234</div>
+        <button class="login-submit" onclick="doLogin()">Sign In to Kitchen →</button>
+        <div class="login-or"><span>or continue with</span></div>
+        <div class="login-socials">
+          <button class="login-social-btn" onclick="guestLogin()">👤 Guest</button>
+          <button class="login-social-btn" onclick="doLogin()">🍳 Demo</button>
+          <button class="login-social-btn" onclick="doLogin()">🌐 Google</button>
+        </div>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div id="suForm" style="display:none;">
+        <div class="login-field">
+          <label>Full Name</label>
+          <div class="login-field-ico">👤</div>
+          <input type="text" placeholder="Your full name">
+        </div>
+        <div class="login-field">
+          <label>Email Address</label>
+          <div class="login-field-ico">📧</div>
+          <input type="email" placeholder="you@email.com">
+        </div>
+        <div class="login-field">
+          <label>Password</label>
+          <div class="login-field-ico">🔒</div>
+          <input type="password" placeholder="Create a strong password">
+        </div>
+        <button class="login-submit" onclick="doLogin()">Create My Account →</button>
+        <p style="text-align:center;font-size:.75rem;color:var(--ink-lt);margin-top:14px;font-weight:300;">By signing up you agree to our Terms of Service</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN APP SCREEN
+══════════════════════════════════════════ -->
+<div id="appScreen" class="screen">
+
+  <!-- Fixed Header / Navigation -->
+  <header class="hdr">
+    <div class="hdr-logo">🍳 Cook<span>Master</span></div>
+    <nav class="hdr-nav" id="mainNav">
+      <button class="nav-t act" onclick="switchTab('home')">🏠 Home</button>
+      <button class="nav-t" onclick="switchTab('cuisines')">🌍 Cuisines</button>
+      <button class="nav-t" onclick="switchTab('vegnonveg')">🥗 Veg / Non-Veg</button>
+      <button class="nav-t" onclick="switchTab('quick')">⚡ Quick Cook</button>
+      <button class="nav-t" onclick="switchTab('tips')">💡 Chef Tips</button>
+      <button class="nav-t" onclick="switchTab('planner')">📅 Daily Planner</button>
+      <button class="nav-t" onclick="switchTab('grocery')">🛒 Grocery</button>
+      <button class="nav-t" onclick="switchTab('reviews')">⭐ Reviews</button>
+    </nav>
+    <div class="hdr-right">
+      <div class="hdr-search">
+        <span style="font-size:.9rem;color:var(--ink-lt);">🔍</span>
+        <input type="text" placeholder="Search recipes…" id="srchInput" oninput="liveSearch(this.value)">
+      </div>
+      <div class="hdr-avatar" id="uAvatar">C</div>
+    </div>
+  </header>
+
+  <!-- ═══ HOME TAB ═══ -->
+  <div class="tab-c act" id="tab-home">
+    <div class="hero">
+      <div class="hero-pattern"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">Your Culinary Journey Awaits</div>
+        <h1 class="hero-h1">Cook with <em>Passion</em>,<br>Eat with <em>Joy</em></h1>
+        <p class="hero-p">Discover over 150 authentic recipes from 12 world cuisines. Step-by-step guidance, smart ingredient substitutes, and a daily meal planner — all in one beautiful kitchen companion.</p>
+        <div class="hero-btns">
+          <button class="btn-gold" onclick="switchTab('cuisines')">🌍 Explore Cuisines</button>
+          <button class="btn-outline-white" onclick="switchTab('quick')">⚡ Quick Recipes</button>
+          <button class="btn-outline-white" onclick="switchTab('planner')">📅 Plan My Meals</button>
+        </div>
+      </div>
+      <div class="hero-stats-row">
+        <div class="hero-stat-item"><span class="n">150+</span><span class="l">Recipes</span></div>
+        <div class="hero-stat-item"><span class="n">12</span><span class="l">Cuisines</span></div>
+        <div class="hero-stat-item"><span class="n">50+</span><span class="l">Chef Tips</span></div>
+        <div class="hero-stat-item"><span class="n">4.9★</span><span class="l">Rating</span></div>
+      </div>
+      <div class="hero-float">
+        <span>🍛</span><span>🍜</span><span>🥘</span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Browse by origin</div>
+        <div class="sec-title">World Cuisines</div>
+        <div class="sec-sub">Authentic flavours from every corner of the globe</div>
+      </div>
+      <!-- Dynamically rendered by app.js -->
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+
+    <div class="sec sec-alt">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Most loved this week</div>
+        <div class="sec-title">Trending Recipes</div>
+      </div>
+      <!-- Dynamically rendered by app.js -->
+      <div class="dish-grid" id="trendGrid"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Ready in under 20 minutes</div>
+        <div class="sec-title">Quick &amp; Delicious</div>
+      </div>
+      <!-- Dynamically rendered by app.js -->
+      <div class="dish-grid" id="quickHomeGrid"></div>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="sec sec-alt">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--emerald-lt);">🥗</div>
+          <div class="feature-name">Veg &amp; Non-Veg</div>
+          <div class="feature-desc">Clearly separated vegetarian, vegan, and non-vegetarian sections for every cuisine</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--gold-pale);">🔬</div>
+          <div class="feature-name">Substitute Checker</div>
+          <div class="feature-desc">Not sure about an ingredient swap? Our checker tells you instantly</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--crimson-lt);">📅</div>
+          <div class="feature-name">Daily Food Planner</div>
+          <div class="feature-desc">Plan breakfast, lunch, snacks and dinner for the whole week with nutrition tracking</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--emerald-lt);">🛒</div>
+          <div class="feature-name">Smart Grocery List</div>
+          <div class="feature-desc">Auto-generate your shopping list from your meal plan, never forget an ingredient</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CUISINES TAB ═══ -->
+  <div class="tab-c" id="tab-cuisines">
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">All cuisines</div>
+        <div class="sec-title">World Cuisines</div>
+        <div class="sec-sub">Explore every cuisine — use the filters below to browse by type</div>
+      </div>
+      <!-- Dynamically rendered by app.js -->
+      <div class="filter-pills" id="cuisineFilter"></div>
+      <div id="cuisineSections"></div>
+    </div>
+  </div>
+
+  <!-- ═══ VEG / NON-VEG TAB ═══ -->
+  <div class="tab-c" id="tab-vegnonveg">
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Dietary preferences</div>
+        <div class="sec-title">Veg &amp; Non-Veg Recipes</div>
+        <div class="sec-sub">All recipes clearly classified by dietary type</div>
+      </div>
+      <div class="diet-toggle" id="dietToggle">
+        <button class="diet-btn act-all" onclick="setDiet('all',this)">🍽 All</button>
+        <button class="diet-btn" onclick="setDiet('veg',this)">🟢 Vegetarian</button>
+        <button class="diet-btn" onclick="setDiet('vegan',this)">🌱 Vegan</button>
+        <button class="diet-btn" onclick="setDiet('nonveg',this)">🔴 Non-Veg</button>
+      </div>
+      <!-- Dynamically rendered by app.js -->
+      <div id="vnvSections"></div>
+    </div>
+  </div>
+
+  <!-- ═══ QUICK COOK TAB ═══ -->
+  <div class="tab-c" id="tab-quick">
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Speed cooking</div>
+        <div class="sec-title">Quick Cook</div>
+        <div class="sec-sub">Sorted by cooking time — delicious meals in minutes</div>
+      </div>
+      <!-- Dynamically rendered by app.js -->
+      <div class="time-cards" id="timeCards"></div>
+      <div class="sec-header" style="margin-top:8px;">
+        <div class="sec-title" id="quickTitle" style="font-size:1.3rem;">All Recipes</div>
+      </div>
+      <div class="dish-grid" id="quickDishGrid"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CHEF TIPS TAB ═══ -->
+  <div class="tab-c" id="tab-tips">
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Professional secrets</div>
+        <div class="sec-title">Chef Tips &amp; Tricks</div>
+        <div class="sec-sub">Elevate your cooking with these kitchen-tested techniques</div>
+      </div>
+      <!-- Dynamically rendered by app.js -->
+      <div class="tips-grid" id="tipsGrid"></div>
+    </div>
+  </div>
+
+  <!-- ═══ DAILY PLANNER TAB ═══ -->
+  <div class="tab-c" id="tab-planner">
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Your daily routine</div>
+        <div class="sec-title">Daily Food Planner</div>
+        <div class="sec-sub">Plan your complete day of meals with nutrition tracking</div>
+      </div>
+
+      <!-- Weekly strip — dynamically rendered -->
+      <div class="weekly-strip" id="weeklyStrip"></div>
+
+      <div class="planner-wrap">
+        <!-- Sidebar -->
+        <div>
+          <div class="planner-sidebar">
+            <div class="planner-sidebar-hdr">
+              <h3 id="plannerSideTitle">Week Overview</h3>
+              <p>Click a day to plan meals</p>
+            </div>
+            <div class="planner-date-nav">
+              <button class="planner-date-btn" onclick="prevWeek()">◀</button>
+              <span id="weekLabel">This Week</span>
+              <button class="planner-date-btn" onclick="nextWeek()">▶</button>
+            </div>
+            <!-- Dynamically rendered by app.js -->
+            <div class="planner-day-list" id="plannerDayList"></div>
+          </div>
+
+          <!-- Nutrition Bar -->
+          <div style="margin-top:16px;">
+            <div class="planner-nut-bar">
+              <h4>📊 Today's Nutrition</h4>
+              <div class="planner-nut-grid">
+                <div class="pn-item"><span class="pn-val" id="pnCal">0</span><span class="pn-lbl">Calories</span><div class="pn-bar-track"><div class="pn-bar-fill" id="pnCalBar" style="width:0%"></div></div></div>
+                <div class="pn-item"><span class="pn-val" id="pnPro">0g</span><span class="pn-lbl">Protein</span><div class="pn-bar-track"><div class="pn-bar-fill" id="pnProBar" style="width:0%;background:#3dd6ca"></div></div></div>
+                <div class="pn-item"><span class="pn-val" id="pnCarb">0g</span><span class="pn-lbl">Carbs</span><div class="pn-bar-track"><div class="pn-bar-fill" id="pnCarbBar" style="width:0%;background:#f5a623"></div></div></div>
+                <div class="pn-item"><span class="pn-val" id="pnFat">0g</span><span class="pn-lbl">Fat</span><div class="pn-bar-track"><div class="pn-bar-fill" id="pnFatBar" style="width:0%;background:#e8607a"></div></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Generate Grocery Button -->
+          <div style="margin-top:14px;background:var(--white);border-radius:var(--r-md);border:1px solid var(--border-lt);padding:18px;box-shadow:var(--shadow-sm);">
+            <h4 style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:12px;">🛒 Generate Grocery List</h4>
+            <p style="font-size:.78rem;color:var(--ink-lt);margin-bottom:12px;font-weight:300;">Based on all meals in your planner</p>
+            <button onclick="generateGrocery()" style="width:100%;padding:10px;background:var(--emerald);color:#fff;border-radius:var(--r-sm);font-weight:600;font-size:.82rem;cursor:pointer;">Generate List →</button>
+          </div>
+        </div>
+
+        <!-- Meal Slots — dynamically rendered by app.js -->
+        <div class="planner-main" id="plannerMain"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ GROCERY TAB ═══ -->
+  <div class="tab-c" id="tab-grocery">
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Shopping made easy</div>
+        <div class="sec-title">Grocery List</div>
+      </div>
+      <div class="grocery-layout">
+        <!-- Add Items Panel -->
+        <div class="grocery-panel">
+          <div class="grocery-panel-hdr"><h3>➕ Add Items</h3></div>
+          <div class="grocery-panel-body">
+            <div class="grocery-field">
+              <input class="grocery-in" id="grIn" placeholder="e.g. Fresh tomatoes, Basmati rice…" onkeydown="if(event.key==='Enter')addGrocery()">
+              <button class="grocery-add" onclick="addGrocery()">Add</button>
+            </div>
+            <p style="font-size:.72rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-lt);margin-bottom:8px;">Quick Add</p>
+            <div class="quick-adds">
+              <button class="qa-btn" onclick="qAdd('🧅 Onions')">🧅 Onions</button>
+              <button class="qa-btn" onclick="qAdd('🍅 Tomatoes')">🍅 Tomatoes</button>
+              <button class="qa-btn" onclick="qAdd('🧄 Garlic')">🧄 Garlic</button>
+              <button class="qa-btn" onclick="qAdd('🌿 Ginger')">🌿 Ginger</button>
+              <button class="qa-btn" onclick="qAdd('🫚 Cooking Oil')">🫚 Oil</button>
+              <button class="qa-btn" onclick="qAdd('🌶️ Green Chillies')">🌶️ Chillies</button>
+              <button class="qa-btn" onclick="qAdd('🧂 Salt')">🧂 Salt</button>
+              <button class="qa-btn" onclick="qAdd('🥛 Milk')">🥛 Milk</button>
+              <button class="qa-btn" onclick="qAdd('🍚 Rice')">🍚 Rice</button>
+              <button class="qa-btn" onclick="qAdd('🧀 Paneer')">🧀 Paneer</button>
+            </div>
+            <button onclick="clearGrocery()" style="margin-top:14px;font-size:.75rem;color:var(--ink-lt);font-weight:600;cursor:pointer;">🗑 Clear all items</button>
+          </div>
+        </div>
+
+        <!-- Shopping List Panel -->
+        <div class="grocery-panel">
+          <div class="grocery-panel-hdr" style="display:flex;justify-content:space-between;align-items:center;">
+            <h3>📋 Your Shopping List</h3>
+            <span id="grCount" style="background:var(--emerald);color:#fff;padding:3px 10px;border-radius:50px;font-size:.72rem;font-weight:700;">0 items</span>
+          </div>
+          <div class="grocery-panel-body">
+            <!-- Dynamically rendered by app.js -->
+            <div id="grItems"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ REVIEWS TAB ═══ -->
+  <div class="tab-c" id="tab-reviews">
+    <div class="sec">
+      <div class="sec-header">
+        <div class="sec-eyebrow">Community voices</div>
+        <div class="sec-title">Reviews &amp; Ratings</div>
+      </div>
+      <div class="review-layout">
+        <!-- Review Form -->
+        <div class="review-form-card">
+          <div class="review-form-hdr">
+            <h3>✍️ Write a Review</h3>
+            <p>Share your cooking experience with the community</p>
+          </div>
+          <div class="review-form-body">
+            <div class="r-field">
+              <label>Your Name</label>
+              <input class="r-input" id="rvName" placeholder="Chef's name">
+            </div>
+            <div class="r-field">
+              <label>Select Dish</label>
+              <!-- Dynamically populated by app.js -->
+              <select class="r-select" id="rvDish"></select>
+            </div>
+            <div class="r-field">
+              <div class="star-row">
+                <label>Rating</label>
+                <div class="star-pick" id="starPick">
+                  <span onclick="setRvStar(1)">⭐</span>
+                  <span onclick="setRvStar(2)">⭐</span>
+                  <span onclick="setRvStar(3)">⭐</span>
+                  <span onclick="setRvStar(4)">⭐</span>
+                  <span onclick="setRvStar(5)">⭐</span>
+                </div>
+                <span id="rvStarLbl" style="font-size:.78rem;color:var(--ink-lt);font-weight:500;">Not rated</span>
+              </div>
+            </div>
+            <div class="r-field">
+              <label>Your Review</label>
+              <textarea class="r-textarea" id="rvText" placeholder="Tell us about your experience, any tips or tweaks you made…"></textarea>
+            </div>
+            <button class="r-submit" onclick="submitReview()">Submit Review →</button>
+          </div>
+        </div>
+
+        <!-- Review List — dynamically rendered by app.js -->
+        <div class="review-list-panel" id="reviewList"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #appScreen -->
+
+<!-- ══════════════════════════════════════════
+     DISH MODAL
+══════════════════════════════════════════ -->
+<div class="modal-ov" id="dishModal" onclick="closeMOv(event)">
+  <div class="modal-box" id="dishModalBox"></div>
+</div>
+
+<!-- ── External JS (defer so DOM is ready) ── -->
+<script src="app.js" defer></script>
+
+</body>
+</html>
